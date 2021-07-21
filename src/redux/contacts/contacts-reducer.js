@@ -1,10 +1,16 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import actions from './contacts-actions';
+import {
+    addContactRequest,
+    addContactSuccess,
+    addContactError,
+    removeContact,
+    changeFilter,
+} from './contacts-actions';
 import initialContacts from '../../contacts.json';
 
 const items = createReducer([...initialContacts], {
-    [actions.addContact]: (state, action) => {
+    [addContactSuccess]: (state, action) => {
         const nameExistCheck = state.find(
             contact => contact.name === action.payload.name,
         );
@@ -13,17 +19,24 @@ const items = createReducer([...initialContacts], {
             : alert('This name has already exists, try another one!');
     },
 
-    [actions.removeContact]: (state, action) =>
+    [removeContact]: (state, action) =>
         state.filter(contact => contact.id !== action.payload),
 });
 
+const loading = createReducer(false, {
+    [addContactRequest]: () => true,
+    [addContactSuccess]: () => false,
+    [addContactError]: () => false,
+});
+
 const filter = createReducer('', {
-    [actions.changeFilter]: (state, { payload }) => payload,
+    [changeFilter]: (state, { payload }) => payload,
 });
 
 export default combineReducers({
     items,
     filter,
+    loading,
 });
 
 // const items = (state = [], { type, payload }) => {
