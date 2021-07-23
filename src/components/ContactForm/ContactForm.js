@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import shortId from 'shortid';
 import PropTypes from 'prop-types';
-import contactsOperations from '../../redux/contacts/contacts-operations';
+import { contactsOperations } from '../../redux/contacts';
 
 class ContactForm extends Component {
     static propTypes = {
@@ -73,7 +73,8 @@ class ContactForm extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onSubmit: data => dispatch(contactsOperations.addContact(data)),
+        onSubmit: data =>
+            dispatch(contactsOperations.addContact(data)),
     };
 };
 

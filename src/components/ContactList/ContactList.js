@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import contactsOperations from '../../redux/contacts/contacts-operations';
+import {
+    contactsOperations,
+    getVisibleContacts,
+} from '../../redux/contacts';
 
 class ContactList extends Component {
     static propTypes = {
@@ -34,16 +37,9 @@ class ContactList extends Component {
     }
 }
 
-const getSearchingContacts = (allContacts, filter) => {
-    const normalizedFilter = filter.toLowerCase();
-    return allContacts.filter(contact =>
-        contact.name.toLowerCase().includes(normalizedFilter),
-    );
-};
 const mapStateToProps = state => {
-    const { filter, items } = state.contacts;
     return {
-        contacts: getSearchingContacts(items, filter),
+        contacts: getVisibleContacts(state),
     };
 };
 const mapDispatchToProps = dispatch => ({

@@ -1,5 +1,8 @@
-import contactsReducer from './contacts/contacts-reducer';
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { contactsReducer } from './contacts';
+import {
+    configureStore,
+    getDefaultMiddleware,
+} from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import {
     FLUSH,
@@ -9,12 +12,18 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
 
 const middleware = [
     ...getDefaultMiddleware({
         serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            ignoredActions: [
+                FLUSH,
+                REHYDRATE,
+                PAUSE,
+                PERSIST,
+                PURGE,
+                REGISTER,
+            ],
         },
     }),
     logger,
